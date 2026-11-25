@@ -20,7 +20,7 @@ The chosen line wins on the turn: plants dying on holiday is expected; dying "ou
 
 ## How it writes
 
-Deterministic, stdlib-only Python 3.13. The line is validated against the gate (1–200 characters, single line, no control characters, no leading/trailing whitespace) before anything is written, then published atomically: full write loop with fsync, mode 0644, verified byte-for-byte *before* the `os.replace` into place, and verified again after it. The tmp file is unique per process and stale ones from crashed runs are swept only when their owner pid is dead.
+Deterministic, stdlib-only Python 3.13. The line is validated against the gate (1–200 characters, single line, no control characters, no leading/trailing whitespace) before anything is written, then published atomically by an `AtomicPublisher`: full write loop with fsync, mode 0644, verified byte-for-byte *before* the `os.replace` into place, and verified again after it. The tmp file is unique per process and stale ones from crashed runs are swept only when their owner pid is dead.
 
 ## Run it
 
